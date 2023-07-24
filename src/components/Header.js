@@ -4,7 +4,7 @@ const Header = ({ searchText }) => {
     const [text, setText] = useState('')
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(`from header -- ${text}`);
+       
         searchText(text)
     }
     return (
