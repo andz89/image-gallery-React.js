@@ -7,7 +7,7 @@ import {useQuery} from '@tanstack/react-query'
 
 
 function App() {
-  const [term, setTerm] = useState("")
+  const [term, setTerm] = useState("moon")
 
 
   const fetchData = async () =>{
