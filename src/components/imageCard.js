@@ -1,11 +1,20 @@
 import React from 'react'
-
-const imageCard = ({ image }) => {
+ 
+const imageCard = ({ image,clickModal }) => {
   const tags = image.tags.split(',')
+ let data = {
+  
+    src: image.webformatURL,
+    user: image.user,
+    views:image.views,
+    likes:image.downloads,
+    downloads:image.likes
+  };
   return (
+ 
     <div className="max-w-lg rounded overflow-hidden shadow-lg text-gray-400 mt-20 border border-gray-700 p-2 bg-gray-900 mx-1">
 
-      <img src={image.webformatURL} alt="" className="w-full" />
+      <img onClick={()=>clickModal(data)} src={image.webformatURL} alt="" className="w-full cursor-pointer" />
       <div className='text-gray-600 italic text-center'>Photos from pixabay.com</div>
       <div className="px-6 py-4">
         <div className="font-bold text-teal-500 text-xl mb-2">Photo by {image.user}</div>

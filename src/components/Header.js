@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { BsSearch } from 'react-icons/bs';
+ 
+
+
 const Header = ({ searchText }) => {
     const [text, setText] = useState('')
     const onSubmit = (e) => {
@@ -22,6 +25,8 @@ const Header = ({ searchText }) => {
                 <button className='px-3 py-2 cursor:pointer   rounded text-white text-base bg-orange-500 inline-block '>Search</button>
             </form>
         </div>
+
+        
     )
 }
 
