@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import Header from "./components/Header";
-import ImageCard from "../../ImageCard";
+import ImageCard from "./components/ImageCard";
 import axios from "axios";
 function App() {
   const [term, setTerm] = useState("river");
