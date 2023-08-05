@@ -7,13 +7,13 @@ const Header = ({ searchText }) => {
     const [text, setText] = useState('')
     const onSubmit = (e) => {
         e.preventDefault()
-       console.log('submit');
+    
         searchText(text)
     }
     return (
         <div className='fixed top-0 w-full bg-teal-900 px-3 py-3  flex text-2xl gap-5 m'
         ><strong className="text-bold text-zinc-300">Gwill Image Gallery </strong>
-            <form onSubmit={onSubmit} className='flex gap-2 items-center'>
+            <form onSubmit={ onSubmit} className='flex gap-2 items-center'>
                 <label className="relative block">
                  
                     <span className="absolute inset-y-0 left-0 flex items-center pl-2">
