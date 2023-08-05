@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-import Header from "./components/Header";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "./components/Button";
 import Input from "./components/Input";
-import ImageCard from "./components/ImageCard";
+import Header from "./components/Header";
+import ImageCard from "../../ImageCard";
+import axios from "axios";
 function App() {
   const [term, setTerm] = useState("river");
   const per_page = 10;
