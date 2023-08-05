@@ -120,7 +120,7 @@ function App() {
                   initValue={initValue}
                 />
 
-                <Button onClick={next} currentPage={currentPage} text="next" />
+                <Button onClick={next} currentPage={currentPage} text="Next" />
               </div>
               <div className="  grid grid-cols-3 gap-1    ">
                 {data?.hits.map((image) => (
@@ -142,7 +142,7 @@ function App() {
                   onChange={onChange}
                   initValue={initValue}
                 />
-                <Button onClick={next} currentPage={currentPage} text="next" />
+                <Button onClick={next} currentPage={currentPage} text="Next" />
               </div>
             </>
           )}
