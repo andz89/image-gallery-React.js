@@ -29,13 +29,19 @@ function App() {
       )
       .then((res) => res.data);
   };
-  const { data, isLoading, refetch, isFetching } = useQuery(
+  const { data, isLoading, refetch, isFetching, isError } = useQuery(
     ["image", term, currentPage],
     () => fetchData(),
     {
       staleTime: 30000,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      onError: (error) => {
+        // Handle the error here
+        // setInitValue(1);
+        // setCurrentPage(1);
+        // navigate(`?page=${1}`);
+      },
     }
   );
 
@@ -89,7 +95,7 @@ function App() {
 
   return (
     <>
-      <div className={"bg-gray-950"}>
+      <div className="bg-gray-950">
         <Header searchText={(text) => refetchData(text)} />
 
         {isLoading && data?.hits.length === 0 && (
@@ -98,6 +104,15 @@ function App() {
           </h1>
         )}
         <div className="container mx-auto ">
+          {isError && (
+            <div className=" h-screen flex justify-center items-center bg-gray-950 ">
+              <div className="bg-white h-[100px] w-[400px] rounded p-2 flex justify-center items-center">
+                <h3 className="text-md text-zinc-500">
+                  The requested page number is not available.
+                </h3>
+              </div>
+            </div>
+          )}
           {isLoading ? (
             <div className="w-full h-screen flex justify-center items-center">
               {" "}
@@ -107,43 +122,55 @@ function App() {
             </div>
           ) : (
             <>
-              <div className="  pt-[110px]   flex justify-center gap-10 text-white ">
-                <Button
-                  onClick={previous}
-                  currentPage={currentPage}
-                  text="Previous"
-                />
+              {!isError && (
+                <>
+                  <div className="  pt-[110px]   flex justify-center gap-10 text-white ">
+                    <Button
+                      onClick={previous}
+                      currentPage={currentPage}
+                      text="Previous"
+                    />
 
-                <Input
-                  onSubmit={onSubmit}
-                  onChange={onChange}
-                  initValue={initValue}
-                />
+                    <Input
+                      onSubmit={onSubmit}
+                      onChange={onChange}
+                      initValue={initValue}
+                    />
 
-                <Button onClick={next} currentPage={currentPage} text="Next" />
-              </div>
-              <div className="  grid grid-cols-3 gap-1    ">
-                {data?.hits.map((image) => (
-                  <ImageCard
-                    isFetching={isFetching}
-                    key={image.id}
-                    image={image}
-                  />
-                ))}
-              </div>
-              <div className="  py-10 flex justify-center gap-10 text-white">
-                <Button
-                  onClick={previous}
-                  currentPage={currentPage}
-                  text="Previous"
-                />
-                <Input
-                  onSubmit={onSubmit}
-                  onChange={onChange}
-                  initValue={initValue}
-                />
-                <Button onClick={next} currentPage={currentPage} text="Next" />
-              </div>
+                    <Button
+                      onClick={next}
+                      currentPage={currentPage}
+                      text="Next"
+                    />
+                  </div>
+                  <div className="  grid grid-cols-3 gap-1    ">
+                    {data?.hits.map((image) => (
+                      <ImageCard
+                        isFetching={isFetching}
+                        key={image.id}
+                        image={image}
+                      />
+                    ))}
+                  </div>
+                  <div className="  py-10 flex justify-center gap-10 text-white">
+                    <Button
+                      onClick={previous}
+                      currentPage={currentPage}
+                      text="Previous"
+                    />
+                    <Input
+                      onSubmit={onSubmit}
+                      onChange={onChange}
+                      initValue={initValue}
+                    />
+                    <Button
+                      onClick={next}
+                      currentPage={currentPage}
+                      text="Next"
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
