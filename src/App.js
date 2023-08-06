@@ -1,27 +1,24 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import Header from "./components/Header";
 import ImageCard from "./components/ImageCard";
 import axios from "axios";
 function App() {
-  const [term, setTerm] = useState("river");
   const per_page = 10;
   const navigate = useNavigate();
-  const location = useLocation();
-  const [initValue, setInitValue] = useState(
-    parseInt(new URLSearchParams(location.search).get("page"), 10) || 1
-  );
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(new URLSearchParams(location.search).get("page"), 10) || 1
-  );
-  const minWidth = 800; // Replace with your desired minimum width
-  const minHeight = 600; // Replace with your desired minimum height
 
+  const [term, setTerm] = useState("river");
+  const [initValue, setInitValue] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const minWidth = 800;
+  const minHeight = 600;
+
+  useEffect(() => {
+    navigate(`?term=${encodeURIComponent(term)}&page=${1}`);
+  }, [navigate, term]);
   const fetchData = async () => {
     return axios
       .get(
@@ -36,30 +33,25 @@ function App() {
       staleTime: 30000,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      onError: (error) => {
-        // Handle the error here
-        // setInitValue(1);
-        // setCurrentPage(1);
-        // navigate(`?page=${1}`);
-      },
     }
   );
 
   const refetchData = (text) => {
     refetch();
-    navigate(`?page=${1}`);
+    navigate(`?term=${encodeURIComponent(text)}&page=${1}`);
     setTerm(text);
     setCurrentPage(1);
     setInitValue(1);
   };
   const previous = () => {
     setCurrentPage((currentPage) => currentPage - 1);
-    navigate(`?page=${currentPage - 1}`);
+    navigate(`?term=${encodeURIComponent(term)}&page=${currentPage - 1}`);
     setInitValue(currentPage - 1);
   };
   const next = () => {
     setCurrentPage((currentPage) => currentPage + 1);
-    navigate(`?page=${currentPage + 1}`);
+
+    navigate(`?term=${encodeURIComponent(term)}&page=${currentPage + 1}`);
     setInitValue(currentPage + 1);
   };
 
@@ -72,7 +64,7 @@ function App() {
     } else {
       const num = parseInt(initValue);
       setCurrentPage(num);
-      navigate(`?page=${num}`);
+      navigate(`?term=${encodeURIComponent(term)}&page=${num}`);
     }
   };
   //input page number
