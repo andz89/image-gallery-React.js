@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import Header from "./components/Header";
@@ -9,16 +9,22 @@ import axios from "axios";
 function App() {
   const per_page = 10;
   const navigate = useNavigate();
+  const location = useLocation();
+  let params = new URLSearchParams(location.search).get("term");
 
-  const [term, setTerm] = useState("river");
-  const [initValue, setInitValue] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [term, setTerm] = useState(params || "river");
+  const [initValue, setInitValue] = useState(
+    parseInt(new URLSearchParams(location.search).get("page"), 10) || 1
+  );
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(new URLSearchParams(location.search).get("page"), 10) || 1
+  );
   const minWidth = 800;
   const minHeight = 600;
 
   useEffect(() => {
-    navigate(`?term=${encodeURIComponent(term)}&page=${1}`);
-  }, [navigate, term]);
+    navigate(`?term=${encodeURIComponent(term)}&page=${currentPage}`);
+  }, [navigate, term, currentPage]);
   const fetchData = async () => {
     return axios
       .get(
